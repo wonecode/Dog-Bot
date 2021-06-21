@@ -1,3 +1,3 @@
 # dog-bot
 
-test
+a discord bot test in Node.js
