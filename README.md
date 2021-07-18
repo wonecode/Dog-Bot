@@ -1,3 +1,3 @@
 # dog-bot
 
-a discord bot test in Node.js
+Discord bot test in Node.js using some simple features
