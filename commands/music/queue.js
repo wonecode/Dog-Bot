@@ -11,7 +11,7 @@ module.exports = class QueueCommand extends Command {
             args: [
                 {
                     key: 'page',
-                    prompt: 'Quelle page afficher blaireau ?',
+                    prompt: 'Quelle page afficher ?',
                     default: 1,
                     type: 'integer'
                 }
@@ -28,7 +28,7 @@ module.exports = class QueueCommand extends Command {
         const server = message.client.server;
 
         if (!message.client.voice.connections.first()) {
-            return message.say(':x: **Je suis pas dans un channel vocal blaireau**');
+            return message.say(':x: **Je suis pas dans un channel vocal**');
         }
 
         const itemsNumber = 10;
@@ -51,7 +51,7 @@ module.exports = class QueueCommand extends Command {
             }
 
             if (page <= 0 || (page) > totalPages) {
-                return message.say(':x: Cette page n\'existe pas bouffon');
+                return message.say(':x: Cette page n\'existe pas');
             }
 
             if ( (queueLength - startingItem) < itemsNumber) {

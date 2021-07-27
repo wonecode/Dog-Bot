@@ -21,11 +21,11 @@ module.exports = class ResumeCommand extends Command {
         const server = message.client.server;
 
         if (!message.member.voice.channel) {
-            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser ça blaireau**')
+            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser cette commande**')
         }
 
         if (!message.client.voice.connections.first()) {
-            return message.say(':x: **Je suis pas dans un channel vocal blaireau**')
+            return message.say(':x: **Je suis pas dans un channel vocal**')
         }
 
         if (server.dispatcher) {
