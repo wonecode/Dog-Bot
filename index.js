@@ -1,6 +1,7 @@
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 require('dotenv').config();
+const express = require('express');
 
 const client = new CommandoClient({
     commandPrefix: '!',
@@ -29,3 +30,5 @@ client.once('ready', () => {
 client.on('error', (error) => console.error(error));
 
 client.login(process.env.DISCORD_TOKEN);
+
+express().listen(process.env.PORT || 5000);
