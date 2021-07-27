@@ -10,8 +10,7 @@ module.exports = class toxicoCommand extends Command {
       name: 'toxico',
       group: 'message',
       memberName: 'toxico',
-      description:
-        'Afin de fermer le clapet de Peunch',
+      description: 'Afin de fermer le clapet de Peunch',
     });
   }
 
