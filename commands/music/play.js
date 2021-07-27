@@ -29,7 +29,7 @@ module.exports = class PlayCommand extends Command {
         const server = message.client.server;
 
         if (!message.member.voice.channel) {
-            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser ça blaireau**')
+            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser cette commande**')
         }
 
         await message.member.voice.channel.join().then((connection) => {

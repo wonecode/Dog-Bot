@@ -8,11 +8,12 @@ const client = new CommandoClient({
 });
 
 client.registry
-    .registerDefaultTypes()
-    .registerDefaultGroups()
-    .registerDefaultCommands()
-    .registerGroup('music', 'Music')
-    .registerCommandsIn(path.join(__dirname, 'commands'));
+  .registerDefaultTypes()
+  .registerDefaultGroups()
+  .registerDefaultCommands()
+  .registerGroup('music', 'Music')
+  .registerGroup('message', 'Message')
+  .registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.server = {
     queue: [],
@@ -26,4 +27,4 @@ client.once('ready', () => {
 
 client.on('error', (error) => console.error(error));
 
-client.login(process.env.TOKEN);
+client.login('ODQxMDkwNzU1NTUxMjk3NTM4.YJhszg.mWr765wXsCaWPbaVUuyR6qn1DtU');

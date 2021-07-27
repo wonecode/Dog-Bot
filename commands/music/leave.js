@@ -19,7 +19,7 @@ module.exports = class LeaveCommand extends Command {
         const voiceChannel = message.member.voice.channel;
 
         if (!voiceChannel) {
-            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser ça blaireau**')
+            return message.say(':x: **Tu dois être dans un channel vocal pour utiliser cette commande**')
         }
 
         await voiceChannel.leave();
