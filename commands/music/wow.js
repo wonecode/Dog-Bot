@@ -4,14 +4,14 @@ const {
 } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 
-module.exports = class nbaCommand extends Command {
+module.exports = class wowCommand extends Command {
   constructor(client) {
     super(client, {
-      name: '2k',
+      name: 'wow',
       group: 'message',
-      memberName: 'nba 2k22',
+      memberName: 'world of warcraft',
       description:
-        'Compte à rebours pour la sortie de 2K22',
+        'Compte à rebours avant que World of Warcraft soit finito pepito',
     });
   }
 
@@ -19,7 +19,7 @@ module.exports = class nbaCommand extends Command {
    * @param {CommandoMessage} message
    */
   async run(message) {
-    const release = 'September 10 2021';
+    const release = 'August 31 2021';
 
     const total =
       Date.parse(release) - Date.parse(new Date());
@@ -31,12 +31,14 @@ module.exports = class nbaCommand extends Command {
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
 
     var embed = new MessageEmbed()
-      .setTitle('NBA 2K22')
-      .setURL('https://nba.2k.com/fr-FR/buy/')
-      .setColor('RED')
+      .setTitle('World of Warcraft')
+      .setURL(
+        'https://www.newworld.com/fr-fr/game-editions'
+      )
+      .setColor('GREEN')
       .addField(
-        'Temps restant avant la sortie de NBA 2K22',
-          days +
+        'Temps restant avant la fin de World of Warcraft',
+        days +
           ' jours, ' +
           hours +
           ' heures, ' +
@@ -44,7 +46,7 @@ module.exports = class nbaCommand extends Command {
           ' minutes.'
       )
       .setImage(
-        'https://i0.wp.com/noopinhogames.com/wp-content/uploads/2021/07/NBA2K22.jpg?resize=1140%2C641&ssl=1'
+        'https://www.gamereactor.fr/media/06/_2940673b.jpg'
       )
       .setFooter('');
 
