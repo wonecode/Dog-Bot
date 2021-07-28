@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dog bot",
   "main": "index.js",
-  "author": "",
+  "author": "Wone",
   "license": "ISC",
   "engines": {
     "node": "14.x"
