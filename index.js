@@ -25,10 +25,17 @@ client.server = {
 };
 
 client.once('ready', () => {
+  const date = new Date();
+  const cleanDate = date.toLocaleString('fr-FR');
+
   console.log(
     `Connecté en tant que ${client.user.tag} -  (${client.user.id})`
   );
-  client.channels.cache.get('870785785274695771').send('Bot opérationnel :white_check_mark:');
+  client.channels.cache
+    .get('870785785274695771')
+    .send(
+      `:white_check_mark: **${cleanDate}** - opérationnel`
+    );
   client.user.setPresence({
     activity: {
       name: `${client.guilds.cache.size} serveurs`,
@@ -38,7 +45,16 @@ client.once('ready', () => {
   });
 });
 
-client.on('error', (error) => console.error(error));
+client.on('error', (error) => {
+    console.error(error);
+    client.user.setPresence({
+      activity: {
+        name: `${client.guilds.cache.size} serveurs`,
+        type: 'WATCHING',
+      },
+      status: 'online',
+    });
+});
 
 client.login(process.env.DISCORD_TOKEN);
 
