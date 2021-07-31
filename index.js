@@ -29,18 +29,18 @@ client.once('ready', () => {
   const date = new Date();
   const cleanDate = date.toLocaleString('fr-FR');
 
-  var embed = new MessageEmbed()
-    .setTitle(client.user.tag)
-    .setColor('GREEN')
-    .addField('Statut', 'En ligne')
-    .setFooter(cleanDate);
-
   console.log(
     `Connecté en tant que ${client.user.tag} -  (${client.user.id})`
   );
   client.channels.cache
     .get('870785785274695771')
-    .send(embed);
+    .send(
+      new MessageEmbed()
+        .setTitle(client.user.tag)
+        .setColor('GREEN')
+        .addField('Statut', 'En ligne')
+        .setFooter(cleanDate)
+    );
   client.user.setPresence({
     activity: {
       name: `${client.guilds.cache.size} serveurs`,
@@ -51,14 +51,14 @@ client.once('ready', () => {
 });
 
 client.on('error', (error) => {
-    console.error(error);
-    client.user.setPresence({
-      activity: {
-        name: `${client.guilds.cache.size} serveurs`,
-        type: 'WATCHING',
-      },
-      status: 'online',
-    });
+  console.error(error);
+  client.user.setPresence({
+    activity: {
+      name: `${client.guilds.cache.size} serveurs`,
+      type: 'WATCHING',
+    },
+    status: 'online',
+  });
 });
 
 client.login(process.env.DISCORD_TOKEN);
