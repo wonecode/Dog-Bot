@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config();
 const express = require('express');
 const PORT = process.env.PORT || 5000;
+const { MessageEmbed } = require('discord.js');
 
 const client = new CommandoClient({
   commandPrefix: '!',
@@ -28,14 +29,18 @@ client.once('ready', () => {
   const date = new Date();
   const cleanDate = date.toLocaleString('fr-FR');
 
+  var embed = new MessageEmbed()
+    .setTitle(client.user.tag)
+    .setColor('GREEN')
+    .addField('Statut', 'En ligne')
+    .setFooter(cleanDate);
+
   console.log(
     `Connecté en tant que ${client.user.tag} -  (${client.user.id})`
   );
   client.channels.cache
     .get('870785785274695771')
-    .send(
-      `:white_check_mark: **${cleanDate}** - opérationnel`
-    );
+    .send(embed);
   client.user.setPresence({
     activity: {
       name: `${client.guilds.cache.size} serveurs`,
