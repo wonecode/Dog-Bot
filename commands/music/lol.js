@@ -108,7 +108,7 @@ module.exports = class lolCommand extends Command {
             .setColor('RED')
         );
       }
-    }, 10000);
+    }, 20000);
 
     return message.say(
       new MessageEmbed()
