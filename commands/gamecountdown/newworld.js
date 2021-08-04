@@ -18,7 +18,7 @@ module.exports = class newworldCommand extends Command {
    * @param {CommandoMessage} message
    */
   async run(message) {
-    const release = 'August 31 2021';
+    const release = 'September 28 2021';
 
     const total =
       Date.parse(release) - Date.parse(new Date());
