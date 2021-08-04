@@ -9,9 +9,9 @@ module.exports = class lolCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'lol',
-      group: 'message',
-      memberName: 'lol',
-      description: 'Permet de voir ses stats sur LoL',
+      group: 'leagueoflegends',
+      memberName: 'leaguestatsv1',
+      description: 'Permet de voir ses stats sur LoL (v1)',
       args: [
         {
           key: 'query',

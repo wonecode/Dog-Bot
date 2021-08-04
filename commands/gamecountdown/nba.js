@@ -4,14 +4,14 @@ const {
 } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 
-module.exports = class newworldCommand extends Command {
+module.exports = class nbaCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'newworld',
-      group: 'message',
-      memberName: 'new world',
+      name: '2k',
+      group: 'gamecountdown',
+      memberName: 'nba 2k22',
       description:
-        'Compte à rebours pour la sortie de New World',
+        'Compte à rebours pour la sortie de 2K22',
     });
   }
 
@@ -19,7 +19,7 @@ module.exports = class newworldCommand extends Command {
    * @param {CommandoMessage} message
    */
   async run(message) {
-    const release = 'August 31 2021';
+    const release = 'September 10 2021';
 
     const total =
       Date.parse(release) - Date.parse(new Date());
@@ -31,13 +31,11 @@ module.exports = class newworldCommand extends Command {
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
 
     var embed = new MessageEmbed()
-      .setTitle('New World')
-      .setURL(
-        'https://www.newworld.com/fr-fr/game-editions'
-      )
-      .setColor('GREY')
+      .setTitle('NBA 2K22')
+      .setURL('https://nba.2k.com/fr-FR/buy/')
+      .setColor('RED')
       .addField(
-        'Temps restant avant la sortie de New World',
+        'Temps restant avant la sortie de NBA 2K22',
           days +
           ' jours, ' +
           hours +
@@ -46,7 +44,7 @@ module.exports = class newworldCommand extends Command {
           ' minutes.'
       )
       .setImage(
-        'https://site-cdn.givemesport.com/images/21/06/21/89f4382344138a85226d31a78064ef5d/1201.jpg'
+        'https://i0.wp.com/noopinhogames.com/wp-content/uploads/2021/07/NBA2K22.jpg?resize=1140%2C641&ssl=1'
       )
       .setFooter('');
 

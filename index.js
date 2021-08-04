@@ -17,6 +17,8 @@ client.registry
   .registerDefaultCommands()
   .registerGroup('music', 'Music')
   .registerGroup('message', 'Message')
+  .registerGroup('leagueoflegends', 'League of Legends')
+  .registerGroup('gamecountdown', 'Games countdown')
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.server = {
@@ -37,8 +39,8 @@ client.once('ready', () => {
     .send(
       new MessageEmbed()
         .setTitle(client.user.tag)
-        .setColor('GREEN')
-        .addField('Statut', 'En ligne')
+        .setColor('ORANGE')
+        .addField('Statut', 'Maintenance')
         .setFooter(cleanDate)
     );
   client.user.setPresence({
@@ -52,13 +54,6 @@ client.once('ready', () => {
 
 client.on('error', (error) => {
   console.error(error);
-  client.user.setPresence({
-    activity: {
-      name: `${client.guilds.cache.size} serveurs`,
-      type: 'WATCHING',
-    },
-    status: 'online',
-  });
 });
 
 client.login(process.env.DISCORD_TOKEN);
