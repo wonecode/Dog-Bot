@@ -71,6 +71,8 @@ module.exports = class leagueCommand extends Command {
     );
     const summonerData = await summonerResponse.json();
 
+    console.log(summonerData);
+
     if (summonerData.id) {
       const summonerId = summonerData.id;
 
@@ -84,77 +86,7 @@ module.exports = class leagueCommand extends Command {
       );
 
       const leagueData = await leagueResponse.json();
-      let playerStats;
-      for (let i = 0; i < leagueData.length; i++) {
-        if (leagueData[i].queueType === 'RANKED_SOLO_5x5') {
-          playerStats = leagueData[i];
-        }
-      }
-
-      // Get season history
-
-      const accountId = summonerData.accountId;
-
-      const matchesReponse = await fetch(
-        'https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' +
-          accountId +
-          '?queue=420' +
-          '&api_key=' +
-          token
-      );
-
-      const matchesData = await matchesReponse.json();
-      const matchesList = matchesData.matches;
-
-      // Main role
-
-      let lane = [];
-      for (let i = 0; i < matchesList.length; i++) {
-        if (matchesList[i].lane === 'BOTTOM') {
-          lane.push(matchesList[i].role);
-        } else {
-          lane.push(matchesList[i].lane);
-        }
-      }
-
-      const arrToInstanceCountObj = (arr) =>
-        arr.reduce((obj, e) => {
-          obj[e] = (obj[e] || 0) + 1;
-          return obj;
-        }, {});
-
-      const laneOcc = arrToInstanceCountObj(lane);
-
-      function getSortedKeys(obj) {
-        var keys = (keys = Object.keys(obj));
-        return keys.sort(function (a, b) {
-          return obj[b] - obj[a];
-        });
-      }
-
-      let playerMostRole = getSortedKeys(laneOcc)[0];
-
-      if (playerMostRole === 'NONE') {
-        playerMostRole = getSortedKeys(laneOcc)[1];
-      }
-
-      if (playerMostRole === 'DUO_CARRY') {
-        playerMostRole = 'AD Carry';
-      } else if (playerMostRole === 'DUO_SUPPORT') {
-        playerMostRole = 'Support';
-      } else {
-        playerMostRole = firstCaps(playerMostRole);
-      }
-
-      // Main champion
-
-      let champions = [];
-      for (let i = 0; i < matchesList.length; i++) {
-        champions.push(matchesList[i].champion);
-      }
-
-      const championsOcc = arrToInstanceCountObj(champions);
-      let playerMainChamp = getSortedKeys(championsOcc)[0];
+      console.log(leagueData);
 
       // Filter if actual season is null
 
@@ -178,13 +110,86 @@ module.exports = class leagueCommand extends Command {
           let days = Math.round(hrs / 24);
 
           if (days >= 1) {
-            return 'Dernière ranked game il y a ' + days + ' jours';
+            return 'Dernière partie classée il y a ' + days + ' jours';
           } else if (hrs > 0) {
-            return 'Dernière ranked game il y a ' + hrs + ' heures';
+            return 'Dernière partie classée il y a ' + hrs + ' heures';
           } else if (hrs <= 0) {
-            return 'Dernière ranked game il y a ' + mins + ' minutes';
+            return 'Dernière partie classée il y a ' + mins + ' minutes';
           }
         }
+
+        let playerStats;
+        for (let i = 0; i < leagueData.length; i++) {
+          if (leagueData[i].queueType === 'RANKED_SOLO_5x5') {
+            playerStats = leagueData[i];
+          }
+        }
+
+        // Get season history
+
+        const accountId = summonerData.accountId;
+
+        const matchesReponse = await fetch(
+          'https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' +
+            accountId +
+            '?queue=420' +
+            '&api_key=' +
+            token
+        );
+
+        const matchesData = await matchesReponse.json();
+        const matchesList = matchesData.matches;
+        console.log(matchesList);
+
+        // Main role
+
+        let lane = [];
+        for (let i = 0; i < matchesList.length; i++) {
+          if (matchesList[i].lane === 'BOTTOM') {
+            lane.push(matchesList[i].role);
+          } else {
+            lane.push(matchesList[i].lane);
+          }
+        }
+
+        const arrToInstanceCountObj = (arr) =>
+          arr.reduce((obj, e) => {
+            obj[e] = (obj[e] || 0) + 1;
+            return obj;
+          }, {});
+
+        const laneOcc = arrToInstanceCountObj(lane);
+
+        function getSortedKeys(obj) {
+          var keys = (keys = Object.keys(obj));
+          return keys.sort(function (a, b) {
+            return obj[b] - obj[a];
+          });
+        }
+
+        let playerMostRole = getSortedKeys(laneOcc)[0];
+
+        if (playerMostRole === 'NONE') {
+          playerMostRole = getSortedKeys(laneOcc)[1];
+        }
+
+        if (playerMostRole === 'DUO_CARRY') {
+          playerMostRole = 'AD Carry';
+        } else if (playerMostRole === 'DUO_SUPPORT') {
+          playerMostRole = 'Support';
+        } else {
+          playerMostRole = firstCaps(playerMostRole);
+        }
+
+        // Main champion
+
+        let champions = [];
+        for (let i = 0; i < matchesList.length; i++) {
+          champions.push(matchesList[i].champion);
+        }
+
+        const championsOcc = arrToInstanceCountObj(champions);
+        let playerMainChamp = getSortedKeys(championsOcc)[0];
 
         // Return message if true
 
@@ -229,7 +234,7 @@ module.exports = class leagueCommand extends Command {
           new MessageEmbed()
             .setTitle('Joueur inactif :warning:')
             .setDescription(
-              'Le joueur **' + summonerData.name + "** n'a pas joué durant la saison 11"
+              'Le joueur **' + summonerData.name + "** n'a pas joué en partie classée durant la saison 11"
             )
             .setFooter("Je n'ai jamais tord, alors essayes de nouveau")
             .setColor('ORANGE')
