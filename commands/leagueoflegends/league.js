@@ -85,6 +85,28 @@ module.exports = class leagueCommand extends Command {
 
       const leagueData = await leagueResponse.json();
 
+      let playerStats;
+      for (let i = 0; i < leagueData.length; i++) {
+        if (leagueData[i].queueType === 'RANKED_SOLO_5x5') {
+          playerStats = leagueData[i];
+        }
+      }
+
+      // Get season history
+
+      const accountId = summonerData.accountId;
+
+      const matchesReponse = await fetch(
+        'https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' +
+          accountId +
+          '?queue=420' +
+          '&api_key=' +
+          token
+      );
+
+      const matchesData = await matchesReponse.json();
+      const matchesList = matchesData.matches;
+
       // Filter if actual season is null
 
       if (leagueData.length !== 0) {
@@ -114,28 +136,6 @@ module.exports = class leagueCommand extends Command {
             return 'Dernière partie classée il y a ' + mins + ' minutes';
           }
         }
-
-        let playerStats;
-        for (let i = 0; i < leagueData.length; i++) {
-          if (leagueData[i].queueType === 'RANKED_SOLO_5x5') {
-            playerStats = leagueData[i];
-          }
-        }
-
-        // Get season history
-
-        const accountId = summonerData.accountId;
-
-        const matchesReponse = await fetch(
-          'https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/' +
-            accountId +
-            '?queue=420' +
-            '&api_key=' +
-            token
-        );
-
-        const matchesData = await matchesReponse.json();
-        const matchesList = matchesData.matches;
 
         // Main role
 
@@ -230,7 +230,9 @@ module.exports = class leagueCommand extends Command {
           new MessageEmbed()
             .setTitle('Joueur inactif :warning:')
             .setDescription(
-              'Le joueur **' + summonerData.name + "** n'a pas joué en partie classée durant la saison 11"
+              'Le joueur **' +
+                summonerData.name +
+                "** n'a pas joué en partie classée durant la saison 11"
             )
             .setFooter("Je n'ai jamais tord, alors essayes de nouveau")
             .setColor('ORANGE')
