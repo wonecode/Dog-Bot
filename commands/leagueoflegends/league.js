@@ -71,8 +71,6 @@ module.exports = class leagueCommand extends Command {
     );
     const summonerData = await summonerResponse.json();
 
-    console.log(summonerData);
-
     if (summonerData.id) {
       const summonerId = summonerData.id;
 
@@ -86,7 +84,6 @@ module.exports = class leagueCommand extends Command {
       );
 
       const leagueData = await leagueResponse.json();
-      console.log(leagueData);
 
       // Filter if actual season is null
 
@@ -139,7 +136,6 @@ module.exports = class leagueCommand extends Command {
 
         const matchesData = await matchesReponse.json();
         const matchesList = matchesData.matches;
-        console.log(matchesList);
 
         // Main role
 
