@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const PORT = process.env.PORT || 5000;
 const { MessageEmbed } = require('discord.js');
+const mongoose = require('mongoose');
 
 const client = new CommandoClient({
   commandPrefix: '!',
@@ -31,9 +32,7 @@ client.once('ready', () => {
   const date = new Date();
   const cleanDate = date.toLocaleString('fr-FR');
 
-  console.log(
-    `Connecté en tant que ${client.user.tag} -  (${client.user.id})`
-  );
+  console.log(`Connecté en tant que ${client.user.tag} -  (${client.user.id})`);
   client.channels.cache
     .get('870785785274695771')
     .send(
@@ -56,8 +55,19 @@ client.on('error', (error) => {
   console.error(error);
 });
 
+mongoose
+  .connect(process.env.MONGODB_SRV, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log('Connecté à MongoDB');
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 client.login(process.env.DISCORD_TOKEN);
 
-express().listen(PORT, () =>
-  console.log(`Listening on ${PORT}`)
-);
+express().listen(PORT, () => console.log(`Listening on ${PORT}`));

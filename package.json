@@ -15,6 +15,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "lol-query": "0.0.5",
+    "mongoose": "^5.13.5",
     "node-fetch": "^2.6.1",
     "request": "^2.88.2",
     "ytdl-core": "^4.8.3",

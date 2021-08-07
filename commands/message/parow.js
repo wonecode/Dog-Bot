@@ -4,9 +4,9 @@ const { Command, CommandoMessage } = require('discord.js-commando');
 module.exports = class toxicoCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'parrow',
+      name: 'parow',
       group: 'message',
-      memberName: 'parrow',
+      memberName: 'parow',
       description: "Afin d'identifier l'individu Parrow",
     });
   }
@@ -17,9 +17,9 @@ module.exports = class toxicoCommand extends Command {
   async run(message) {
     return message.say(
       new MessageEmbed()
-        .setTitle('ID: Parrow')
+        .setTitle('ID: Parow')
         .setDescription(
-          'Parrow est un individu errant dans la nature et porte les caractèristiques de **pédophile alcoolique**.'
+          'Parow est un individu errant dans la nature et porte les caractèristiques de **pédophile alcoolique**.'
         )
         .setImage('https://images.news18.com/ibnlive/uploads/2020/02/Proboscis-Monkey.jpg')
         .setFooter("Individu dangereux, à s'en méfier")
