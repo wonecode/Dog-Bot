@@ -38,14 +38,14 @@ client.once('ready', () => {
     .send(
       new MessageEmbed()
         .setTitle(client.user.tag)
-        .setColor('ORANGE')
-        .addField('Statut', 'Maintenance')
+        .setColor('GREEN')
+        .addField('Statut', 'En ligne')
         .setFooter(cleanDate)
     );
   client.user.setPresence({
     activity: {
-      name: `${client.guilds.cache.size} serveurs`,
-      type: 'WATCHING',
+      name: `Gagablackjack`,
+      type: 'PLAYING',
     },
     status: 'online',
   });
