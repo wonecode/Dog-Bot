@@ -20,6 +20,7 @@ client.registry
   .registerGroup('message', 'Message')
   .registerGroup('leagueoflegends', 'League of Legends')
   .registerGroup('gamecountdown', 'Games countdown')
+  .registerGroup('ufc', 'UFC')
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.server = {
