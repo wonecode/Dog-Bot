@@ -59,15 +59,15 @@ module.exports = class mmaCommand extends Command {
           fighterWinRatio = fighterGlobalStats[2];
           fighterCat = fighterGlobalStats[0].split(' ');
           fighterCategory = fighterCat[0];
+          fighterRank = fighterCat[1];
           fighterStatus = 'Actif';
 
           if (fighterCategory === 'Ancien') {
             fighterCategory = 'Non définie';
+            fighterRank = 'Non défini';
             fighterStatus = 'Retraité';
           }
         }
-
-        console.log(fighterGlobalStats);
 
         return message.say(
           new MessageEmbed()
@@ -92,14 +92,14 @@ module.exports = class mmaCommand extends Command {
 
         return message.say(
           new MessageEmbed()
-          .setAuthor(
-            'Ultimate Fighting Championship',
-            'https://fightnight101.com/wp-content/uploads/2021/04/UFC-264-Full-Fight-Card.png',
-            'https://www.ufc.com/'
-          )
-          .setTitle('Combattant introuvable')
-          .setDescription('Le combattant que tu as recherché est introuvable.')
-          .setTimestamp()
+            .setAuthor(
+              'Ultimate Fighting Championship',
+              'https://fightnight101.com/wp-content/uploads/2021/04/UFC-264-Full-Fight-Card.png',
+              'https://www.ufc.com/'
+            )
+            .setTitle('Combattant introuvable')
+            .setDescription('Le combattant que tu as recherché est introuvable.')
+            .setTimestamp()
         );
       });
   }
