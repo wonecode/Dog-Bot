@@ -118,7 +118,7 @@ module.exports = class leagueCommand extends Command {
 
         const lastGameDate = matchesList[0].timestamp;
         const actualDate = Date.parse(new Date());
-        const lastGame = actualDate - lastGameDate;
+        const lastGame = actualDate + lastGameDate;
 
         function msToTime(s) {
           let ms = s % 1000;
