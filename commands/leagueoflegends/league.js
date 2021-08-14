@@ -8,7 +8,7 @@ module.exports = class leagueCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'league',
-      aliases: ['l'],
+      aliases: ['lol'],
       group: 'leagueoflegends',
       memberName: 'leaguestatsv2',
       description: 'Permet de voir ses stats sur LoL (v2)',
