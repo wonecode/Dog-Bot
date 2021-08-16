@@ -3,6 +3,7 @@ const { Command, CommandoMessage } = require('discord.js-commando');
 const fs = require('fs');
 const cheerio = require('cheerio');
 const got = require('got');
+const axios = require('axios');
 
 module.exports = class valorantCommand extends Command {
   constructor(client) {
@@ -27,6 +28,21 @@ module.exports = class valorantCommand extends Command {
    * @param {string} query
    */
   async run(message, { query }) {
+    return message.say(
+      new MessageEmbed()
+        .setAuthor(
+          'Valorant',
+          'https://studio.cults3d.com/4QqRV9kLYYEuw9ur_X3yjQl1sjk=/516x516/https://files.cults3d.com/uploaders/15024335/illustration-file/a86d53e4-2bd9-4a8f-9550-986686c3131a/gi0mAjIh_400x400.png',
+          'https://playvalorant.com/fr-fr/'
+        )
+        .setColor('ORANGE')
+        .setTitle('Commande en maintenance')
+        .setDescription(
+          "La commande est actuellement indisponible car une maintenance est en cours. Réessayez plus tard."
+        )
+        .setTimestamp()
+    );
+
     const oldQuery = query.split('#');
     let username = oldQuery[0];
     username = username.replace(' ', '');
@@ -39,7 +55,13 @@ module.exports = class valorantCommand extends Command {
       tagline +
       '/overview?playlist=competitive';
 
-    got(vgmUrl)
+    axios
+      .get(vgmUrl, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+        },
+      })
       .then((response) => {
         const $ = cheerio.load(response.body);
         const playerName = $('.trn-ign__username').text();
@@ -104,12 +126,5 @@ module.exports = class valorantCommand extends Command {
             .setTimestamp()
         );
       });
-
-    return message.say(
-      new MessageEmbed()
-        .setTitle('Recherche :hourglass_flowing_sand:')
-        .setDescription('Recherche du joueur en cours...')
-        .setColor('GREEN')
-    );
   }
 };
