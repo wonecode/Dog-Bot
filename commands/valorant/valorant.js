@@ -55,9 +55,9 @@ module.exports = class valorantCommand extends Command {
       },
       function (err, resp, body) {
         if (resp.statusCode === 200) {
+          console.log(resp);
           // load the html into cheerio
           const $ = cheerio.load(body);
-          console.log(resp);
           const playerName = $('.trn-ign__username').text();
           const playerTagline = $('.trn-ign__discriminator').text();
           const playerIcon = $('image').attr('href');
@@ -102,8 +102,7 @@ module.exports = class valorantCommand extends Command {
               .addField('Team', playerMainWeapon, true)
               .setFooter($('h2').text())
           );
-        } else {
-          console.log(err);
+        } else if (body === '') {
           return message.say(
             new MessageEmbed()
               .setAuthor(
@@ -117,15 +116,35 @@ module.exports = class valorantCommand extends Command {
               )
               .setTimestamp()
           );
+        } else if (resp.statusCode === 401) {
+          console.log(resp);
+          return message.say(
+            new MessageEmbed()
+              .setAuthor(
+                'Valorant',
+                'https://studio.cults3d.com/4QqRV9kLYYEuw9ur_X3yjQl1sjk=/516x516/https://files.cults3d.com/uploaders/15024335/illustration-file/a86d53e4-2bd9-4a8f-9550-986686c3131a/gi0mAjIh_400x400.png',
+                'https://playvalorant.com/fr-fr/'
+              )
+              .setTitle('Erreur serveur')
+              .setDescription(
+                'Une erreur avec le serveur est survenue, réessayez dans quelques instants ou contactez **Wone#2395** si le problème persiste.)'
+              )
+              .setTimestamp()
+          );
+        } else {
+          return message.say(
+            new MessageEmbed()
+              .setAuthor(
+                'Valorant',
+                'https://studio.cults3d.com/4QqRV9kLYYEuw9ur_X3yjQl1sjk=/516x516/https://files.cults3d.com/uploaders/15024335/illustration-file/a86d53e4-2bd9-4a8f-9550-986686c3131a/gi0mAjIh_400x400.png',
+                'https://playvalorant.com/fr-fr/'
+              )
+              .setTitle('Erreur inconnue')
+              .setDescription('Une erreur inconnue est survenue, bonne chance :zany_face:)')
+              .setTimestamp()
+          );
         }
       }
-    );
-
-    return message.say(
-      new MessageEmbed()
-        .setTitle('Recherche :hourglass_flowing_sand:')
-        .setDescription('Recherche du joueur en cours...')
-        .setColor('GREEN')
     );
   }
 };
