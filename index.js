@@ -57,18 +57,18 @@ client.on('error', (error) => {
   console.error(error);
 });
 
-mongoose
-  .connect(process.env.MONGODB_SRV, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then(() => {
-    console.log('Connecté à MongoDB');
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// mongoose
+//   .connect(process.env.MONGODB_SRV, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false,
+//   })
+//   .then(() => {
+//     console.log('Connecté à MongoDB');
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
 
 client.login(process.env.DISCORD_TOKEN);
 
