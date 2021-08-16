@@ -50,7 +50,7 @@ module.exports = class valorantCommand extends Command {
       {
         url: vgmUrl,
         headers: {
-          'User-Agent': 'Super Cool Browser', // optional headers
+          'User-Agent': 'Mozilla/5.0', // optional headers
         },
       },
       function (err, resp, body) {
