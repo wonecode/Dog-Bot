@@ -50,7 +50,8 @@ module.exports = class valorantCommand extends Command {
       {
         url: vgmUrl,
         headers: {
-          'User-Agent': 'Mozilla/5.0', // optional headers
+          'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36', // optional headers
         },
       },
       function (err, resp, body) {
@@ -127,7 +128,7 @@ module.exports = class valorantCommand extends Command {
               )
               .setTitle('Erreur serveur')
               .setDescription(
-                'Une erreur avec le serveur est survenue, réessayez dans quelques instants ou contactez **Wone#2395** si le problème persiste.)'
+                'Une erreur avec le serveur est survenue, réessayez dans quelques instants ou contactez **Wone#2395** si le problème persiste.'
               )
               .setTimestamp()
           );
@@ -140,7 +141,7 @@ module.exports = class valorantCommand extends Command {
                 'https://playvalorant.com/fr-fr/'
               )
               .setTitle('Erreur inconnue')
-              .setDescription('Une erreur inconnue est survenue, bonne chance :zany_face:)')
+              .setDescription('Une erreur inconnue est survenue, bonne chance :zany_face:')
               .setTimestamp()
           );
         }
