@@ -116,7 +116,7 @@ module.exports = class valorantCommand extends Command {
               )
               .setTimestamp()
           );
-        } else if (resp.statusCode === 401) {
+        } else if (resp.statusCode === 403) {
           console.log(resp);
           return message.say(
             new MessageEmbed()
@@ -132,7 +132,6 @@ module.exports = class valorantCommand extends Command {
               .setTimestamp()
           );
         } else {
-          console.log(resp);
           return message.say(
             new MessageEmbed()
               .setAuthor(
