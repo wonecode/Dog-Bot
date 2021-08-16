@@ -132,6 +132,7 @@ module.exports = class valorantCommand extends Command {
               .setTimestamp()
           );
         } else {
+          console.log(resp);
           return message.say(
             new MessageEmbed()
               .setAuthor(
