@@ -103,6 +103,7 @@ module.exports = class valorantCommand extends Command {
               .setFooter($('h2').text())
           );
         } else {
+          console.log(err);
           return message.say(
             new MessageEmbed()
               .setAuthor(
