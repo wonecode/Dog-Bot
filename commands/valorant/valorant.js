@@ -41,7 +41,7 @@ module.exports = class valorantCommand extends Command {
 
     const req = request.defaults({
       jar: true, // save cookies to jar
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
       followAllRedirects: true, // allow redirections
     });
 
@@ -51,12 +51,11 @@ module.exports = class valorantCommand extends Command {
         url: vgmUrl,
         headers: {
           'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36', // optional headers
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
         },
       },
       function (err, resp, body) {
         if (resp.statusCode === 200) {
-          console.log(resp);
           // load the html into cheerio
           const $ = cheerio.load(body);
           const playerName = $('.trn-ign__username').text();
@@ -118,7 +117,6 @@ module.exports = class valorantCommand extends Command {
               .setTimestamp()
           );
         } else if (resp.statusCode === 403) {
-          console.log(resp);
           return message.say(
             new MessageEmbed()
               .setAuthor(
