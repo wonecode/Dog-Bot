@@ -8,7 +8,7 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-module.exports = class valorantCommand extends Command {
+module.exports = class counterCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'counter',
