@@ -4,14 +4,19 @@ const cheerio = require('cheerio');
 const request = require('request');
 const got = require('got');
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 module.exports = class valorantCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'counter',
       aliases: ['c'],
       group: 'leagueoflegends',
-      memberName: 'leagueoflegends',
-      description: "Permet de voir les counters d'un champion sur League of Legends",
+      memberName: 'counterlol',
+      description:
+        "Permet de voir les meilleurs et les pires counters d'un champion sur League of Legends",
       args: [
         {
           key: 'query',
@@ -27,9 +32,9 @@ module.exports = class valorantCommand extends Command {
    * @param {string} query
    */
   async run(message, { query }) {
-    const cleanQuery = query.replace(' ', '-');
+    const cleanQuery = query.replace(' ', '');
 
-    const vgmUrl = 'https://lolcounter.com/champions/' + cleanQuery + '/weak';
+    const vgmUrl = 'https://u.gg/lol/champions/' + cleanQuery + '/counter';
 
     const req = request.defaults({
       jar: true, // save cookies to jar
@@ -50,24 +55,53 @@ module.exports = class valorantCommand extends Command {
         if (resp.statusCode === 200) {
           // load the html into cheerio
           const $ = cheerio.load(body);
-          const championName = $('.name', '.champion-stats').text();
-          let championLanes = $('.lanes', '.champion-stats').text();
+          const championName = $('.champion-name', '.champion-header').text();
+          const championIcon = $('.champion-image', '.champion-header').attr('src');
+          const championTitle = $('.champion-title', '.champion-header').text();
+          const patchNotes = $('.header-patch').text();
 
-          let championCountersLanes = [];
+          // CounterChampions
+          let championCountersWinrate = [];
 
-          $('.lane', '.weak-strong').each(function () {
-            championCountersLanes.push('[' + $(this).text() + ']');
+          $('.win-rate', '.best-win-rate').each(function (i) {
+            championCountersWinrate.push($(this).text());
+          });
+
+          let championCountersGames = [];
+
+          $('.total-games', '.best-win-rate').each(function (i) {
+            championCountersGames.push($(this).text());
           });
 
           let championCounters = [];
 
-          $('.name', '.weak-strong').each(function (i) {
-            championCounters.push('• ' + '**' + $(this).text() + '** ' + championCountersLanes[i]);
+          $('.champion-name', '.best-win-rate').each(function (i) {
+            championCounters.push(
+              '**' + $(this).text() + '**' + ' • ' + championCountersWinrate[i]
+            );
           });
 
-          championLanes = championLanes.split('\n');
-          const championMainLane = championLanes[1].replace('\t', '').trim();
-          const championSecondLane = championLanes[2].replace('\t', '').trim();
+          // WorstChampions
+          let championWorstWinrate = [];
+
+          $('.win-rate', '.worst-win-rate').each(function (i) {
+            championWorstWinrate.push($(this).text());
+          });
+
+          let championWorstGames = [];
+
+          $('.total-games', '.worst-win-rate').each(function (i) {
+            championWorstGames.push($(this).text());
+          });
+
+          let championWorst = [];
+
+          $('.champion-name', '.worst-win-rate').each(function (i) {
+            championWorst.push('**' + $(this).text() + '**' + ' • ' + championWorstWinrate[i]);
+          });
+
+          championWorst.unshift('--------------------------------');
+          championCounters.unshift('--------------------------------');
 
           let championTitleClean = championName.replace(' ', '');
 
@@ -81,30 +115,61 @@ module.exports = class valorantCommand extends Command {
             championTitleClean = 'Kaisa';
           } else if (championName === "Vel'Koz") {
             championTitleClean = 'Velkoz';
+          } else if (championName === "Kha'Zix") {
+            championTitleClean = 'Khazix';
           }
 
           const championSplash =
             'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' +
             championTitleClean +
-            '_1.jpg';
+            '_' +
+            getRandomInt(3) +
+            '.jpg';
 
-          const championIcon =
-            'https://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/' +
-            championTitleClean +
-            '.png';
-
-          return message.say(
-            new MessageEmbed()
-              .setAuthor(championName, championIcon, vgmUrl)
-              .setDescription(
-                `${championMainLane}${championSecondLane === '' ? '' : ','} ${championSecondLane}`
-              )
-              .addField('Liste des counters', championCounters)
-              .setColor('BLUE')
-              .setImage(championSplash)
-          );
+            if ($('h1').text() === "THIS PAGEDOESN'T EXIST") {
+              return message.say(
+                new MessageEmbed()
+                  .setAuthor(
+                    'League of Legends',
+                    'https://www.eclypsia.com/content/LoL/Ruined_King/RK_Logo.png'
+                  )
+                  .setTitle('Champion introuvable')
+                  .setDescription("Le champion que tu as recherché n'existe pas")
+                  .setTimestamp()
+              );
+            } else {
+              return message.say(
+                new MessageEmbed()
+                  .setAuthor(championName, championIcon, vgmUrl)
+                  .setDescription(championTitle)
+                  .setColor('BLUE')
+                  .addField(
+                    `:white_check_mark: Best Picks vs ${championName}`,
+                    championCounters,
+                    true
+                  )
+                  .addField(`:no_entry: Worst Picks vs ${championName}`, championWorst, true)
+                  .setImage(championSplash)
+                  .setTimestamp()
+                  .setFooter(
+                    patchNotes,
+                    'https://www.eclypsia.com/content/LoL/Ruined_King/RK_Logo.png'
+                  )
+              );
+            }
         }
       }
+    );
+
+    return message.say(
+      new MessageEmbed()
+        .setAuthor(
+          'League of Legends',
+          'https://www.eclypsia.com/content/LoL/Ruined_King/RK_Logo.png'
+        )
+        .setTitle('Recherche :hourglass_flowing_sand:')
+        .setDescription('Recherche des counters en cours...')
+        .setColor('GREEN')
     );
   }
 };
