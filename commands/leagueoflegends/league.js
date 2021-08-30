@@ -3,6 +3,7 @@ const { Command, CommandoMessage } = require('discord.js-commando');
 require('dotenv').config();
 const token = process.env.RIOT_TOKEN;
 const fetch = require('node-fetch');
+const { romanToArab, arabToRoman, isValidArab, isValidRoman } = require('roman-numbers');
 
 module.exports = class leagueCommand extends Command {
   constructor(client) {
@@ -209,7 +210,7 @@ module.exports = class leagueCommand extends Command {
               'Rang',
               firstCaps(playerStats.tier) +
                 ' ' +
-                (playerStats.rank == 'IV' ? 4 : playerStats.rank.length) +
+                romanToArab(playerStats.rank) +
                 ' | ' +
                 playerStats.leaguePoints +
                 ' LP',
