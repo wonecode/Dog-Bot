@@ -209,7 +209,7 @@ module.exports = class leagueCommand extends Command {
               'Rang',
               firstCaps(playerStats.tier) +
                 ' ' +
-                playerStats.rank.length +
+                (playerStats.rank == 'IV' ? 4 : playerStats.rank.length) +
                 ' | ' +
                 playerStats.leaguePoints +
                 ' LP',
